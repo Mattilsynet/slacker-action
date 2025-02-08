@@ -1,0 +1,17 @@
+name: Slack notify
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  post:
+    name: notify slack
+    uses: Mattilsynet/slacker-action@master
+    env: ${{ secrets.SLACK_BOT_TOKEN }}
+    with:
+      channel-id: C08C995BUAZ
+      args: |
+        repo=${{ github.repository }}
+        star=:star-struck:
+      text: '[repo] sends good fortune [star] <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} | Go to workflow>'
+      debug: true
