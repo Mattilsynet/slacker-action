@@ -13,7 +13,17 @@ const isDev = core.getInput('debug')
     const messageId = core.getInput('message-id')
     const method = messageId ? 'update' : 'postMessage'
 
+    if (!channelId) {
+      core.setFailed('No channel id provided')
+      return
+    }
+
     const token = process.env.SLACK_BOT_TOKEN
+    if (!token) {
+      core.setFailed('No token provided')
+      return
+    }
+    
     const client = new WebClient(token)
 
     const body = {
