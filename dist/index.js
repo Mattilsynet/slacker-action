@@ -39864,6 +39864,7 @@ async function run() {
     }
 
     const token = process.env.SLACK_BOT_TOKEN
+    debug('hasToken', token.slice(0,4))
     if (!token) {
       core.setFailed('No token provided')
       return
