@@ -9,6 +9,7 @@ on:
 jobs:
   post:
     name: notify slack
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: Mattilsynet/slacker-action@main
