@@ -4,7 +4,7 @@ const { WebClient } = require('@slack/web-api');
 
 const isDev = core.getInput('debug')
 
-(async function() {
+async function run() {
   try {
     const channelId = core.getInput('channel-id')
     const text = core.getInput('text')
@@ -46,7 +46,7 @@ const isDev = core.getInput('debug')
     console.error('error data:', JSON.stringify(error.data))
     core.setFailed(error.message);
   }
-})()
+}
 
 function getArgs(argsStr) {
   if (!argsStr || argsStr === '') {
@@ -69,3 +69,5 @@ function debug(...logs) {
     console.log(...logs)
   }
 }
+
+run()
