@@ -28,7 +28,7 @@ jobs:
             repo=${{ steps.repo.outputs.repo }}
             wf-url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
             vest=:safety_vest:
-          text: '[vest] <[wf-url] | __[repo]__> kjører testene... [vest]'
+          text: '[vest] __<[wf-url] | [repo]>__ kjører testene... [vest]'
           debug: true
 
   update:
@@ -55,5 +55,5 @@ jobs:
             repo=${{ steps.repo.outputs.repo }}
             wf-url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
             check=:white_check_mark:
-          text: '[check] <[wf-url] | __[repo]__> Den er i boks! [check]'
+          text: '[check] __<[wf-url] | [repo]>__ Den er i boks! [check]'
           debug: true
