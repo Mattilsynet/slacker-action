@@ -45,3 +45,8 @@ Post and update slack messages
        text: "I am so [grin], I approve [check]"
    ```
    `=> "I am so 😁, I approve ✅"`
+
+## Development
+
+⚠️ Remember to run `npm run build` when adding stuff to `src/index.js`. The changes
+will **not** apply otherwise.
