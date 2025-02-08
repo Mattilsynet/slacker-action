@@ -21,7 +21,7 @@ jobs:
         with:
           channel-id: C08C995BUAZ
           args: |
-            repo=${{ github.repository | cut -d / -f 2 }}
+            repo=${{ github.repository.split('/')[1] }}
             wf-url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
             vest=:safety_vest:
           text: '[vest] <[wf-url] | __[repo]__> kjører testene... [vest]'
@@ -43,7 +43,7 @@ jobs:
           channel-id: C08C995BUAZ
           message-id: ${{ needs.post.outputs.slack-message }}
           args: |
-            repo=${{ github.repository | cut -d / -f 2 }}
+            repo=${{ github.repository.split('/')[1] }}
             wf-url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
             check=:white_check_mark:
           text: '[check] <[wf-url] | __[repo]__> Den er i boks! [check]'
