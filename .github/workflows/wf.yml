@@ -10,11 +10,11 @@ jobs:
   post:
     name: notify slack
     runs-on: ubuntu-latest
-    env:
-      token: ${{ secrets.SLACK_BOT_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: Mattilsynet/slacker-action@main
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: C08C995BUAZ
           args: |
