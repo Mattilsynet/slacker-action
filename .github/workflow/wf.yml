@@ -1,7 +1,8 @@
 name: Slack notify
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch
+  push
 
 jobs:
   post:
