@@ -37,6 +37,7 @@ async function run() {
       }]
     }
 
+    debug(messageId ? 'Updating...' : 'Posting...')
     const { ok, ts } = await client.chat[method](body)
     debug('res:', { ok: ok, ts: ts })
     core.setOutput('message-id', ts)
