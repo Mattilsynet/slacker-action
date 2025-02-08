@@ -9,7 +9,7 @@ on:
 jobs:
   post:
     name: notify slack
-    uses: Mattilsynet/slacker-action@master
+    uses: Mattilsynet/slacker-action@main
     env: ${{ secrets.SLACK_BOT_TOKEN }}
     with:
       channel-id: C08C995BUAZ
