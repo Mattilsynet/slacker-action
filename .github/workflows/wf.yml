@@ -13,8 +13,6 @@ jobs:
     outputs:
       slack-message: ${{ steps.slack.outputs.message-id }}
     steps:
-      - uses: actions/checkout@v4
-
       - id: slack
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -32,8 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [post]
     steps:
-      - uses: actions/checkout@v4
-        
       - name: Wait before updating slack message
         run: sleep 4
         
