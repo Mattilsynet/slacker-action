@@ -1,0 +1,27 @@
+name: 'Slacker'
+description: 'Notify and update slack notifications'
+inputs:
+  channel-id:
+    description: 'Slack channel id'
+    required: true
+  text:
+    description: 'E.g. build status'
+    required: true
+  args:
+    type: 'string'
+    description: |
+      'A list of values to inject into the text'
+    required: false
+  message-id:
+    description: 'Id of the existing message to update'
+    required: false
+  debug:
+    type: 'boolean'
+    required: false
+    default: false
+outputs:
+  message-id:
+    description: 'The id of the message sent'
+runs:
+  using: 'node20'
+  main: 'src/index.js'
