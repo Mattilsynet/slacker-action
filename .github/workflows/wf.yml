@@ -17,7 +17,7 @@ jobs:
 
       - name: Takes only the repository name and capitalizes it
         id: repo
-        run: echo "repo=$(${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
+        run: echo "repo=$(echo ${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
 
       - id: slack
         env:
@@ -41,7 +41,7 @@ jobs:
       
       - name: Takes only the repository name and capitalizes it
         id: repo
-        run: echo "repo=$(${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
+        run: echo "repo=$(echo ${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
         
       - name: Wait before updating slack message
         run: sleep 8
