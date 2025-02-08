@@ -39844,7 +39844,6 @@ module.exports = /*#__PURE__*/JSON.parse('{"application/1d-interleaved-parityfec
 /************************************************************************/
 var __webpack_exports__ = {};
 const core = __nccwpck_require__(7484);
-//const github = require('@actions/github');
 const { WebClient } = __nccwpck_require__(7486);
 
 const isDev = core.getInput('debug')
@@ -39853,7 +39852,6 @@ async function run() {
   try {
     const channelId = core.getInput('channel-id')
     const text = core.getInput('text')
-//    const emoji = core.getInput('emoji')
     const argsStr = core.getInput('args') ?? ''
     const messageId = core.getInput('message-id')
     const method = messageId ? 'update' : 'postMessage'
@@ -39864,7 +39862,6 @@ async function run() {
     }
 
     const token = process.env.SLACK_BOT_TOKEN
-    debug('hasToken', token.slice(0,4))
     if (!token) {
       core.setFailed('No token provided')
       return
@@ -39885,6 +39882,7 @@ async function run() {
       }]
     }
 
+    debug(messageId ? 'Updating...' : 'Posting...')
     const { ok, ts } = await client.chat[method](body)
     debug('res:', { ok: ok, ts: ts })
     core.setOutput('message-id', ts)
