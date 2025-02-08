@@ -16,6 +16,8 @@ Post and update slack messages
 
 ## Usage
 
+_See example usage in `.github/workflows/wf.yml`_
+
 1. Basic example:
    ```yaml
    uses: Mattilsynet/slacker-action@master
