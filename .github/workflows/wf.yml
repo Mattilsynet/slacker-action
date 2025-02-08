@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
         
       - name: Wait before updating slack message
-        run: sleep 8
+        run: sleep 4
         
       - id: slack_update
         env:
