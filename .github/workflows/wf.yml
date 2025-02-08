@@ -13,7 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: Mattilsynet/slacker-action@main
-        env: ${{ secrets.SLACK_BOT_TOKEN }}
+        env:
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: C08C995BUAZ
           args: |
