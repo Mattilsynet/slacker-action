@@ -1,5 +1,4 @@
 const core = require('@actions/core');
-//const github = require('@actions/github');
 const { WebClient } = require('@slack/web-api');
 
 const isDev = core.getInput('debug')
@@ -8,7 +7,6 @@ async function run() {
   try {
     const channelId = core.getInput('channel-id')
     const text = core.getInput('text')
-//    const emoji = core.getInput('emoji')
     const argsStr = core.getInput('args') ?? ''
     const messageId = core.getInput('message-id')
     const method = messageId ? 'update' : 'postMessage'
@@ -19,7 +17,6 @@ async function run() {
     }
 
     const token = process.env.SLACK_BOT_TOKEN
-    debug('hasToken', token?.slice(0,4))
     if (!token) {
       core.setFailed('No token provided')
       return
