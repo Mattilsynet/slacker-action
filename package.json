@@ -2,9 +2,9 @@
   "name": "slacker-action",
   "version": "0.1.0",
   "description": "Notify and update slack notifications",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "ncc build -o dist"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",
     "@slack/web-api": "^7.8.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.3"
   }
 }
