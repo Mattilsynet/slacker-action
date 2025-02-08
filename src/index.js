@@ -25,6 +25,7 @@ async function run() {
 
     const { eventName, workflow, runId, repo: repository } = github.context
     const { owner, repo } = repository
+    const repoUrl = `https://github.com/${owner}/${repo}`
     
     const client = new WebClient(token)
 
@@ -45,7 +46,7 @@ async function run() {
           "elements": [
             {
               "type": "mrkdwn",
-              "text": `${eventName} | <https://github.com/${owner}/${repo}/actions/runs/${runId} | ${workflow}>`
+              "text": `<${repoUrl} | ${repo}> | ${eventName} | <${repoUrl}/actions/runs/${runId} | ${workflow}>`
             }
           ]
         }
