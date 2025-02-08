@@ -15,8 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: repo
-        run: echo "repo=$(cut -d / -f 2 <<< ${{ github.repository }})" >> $GITHUB_OUTPUT
+      - name: Takes only the repository name and capitalizes it
+        id: repo
+        run: echo "repo=$(${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
 
       - id: slack
         env:
@@ -28,7 +29,7 @@ jobs:
             repo=${{ steps.repo.outputs.repo }}
             wf-url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
             vest=:safety_vest:
-          text: '[vest] __<[wf-url] | [repo]>__ kjører testene... [vest]'
+          text: '[vest] [repo] kjører testene... [vest] <[wf-url | ${{ github.workflow }}>'
           debug: true
 
   update:
@@ -38,8 +39,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - id: repo
-        run: echo "repo=$(cut -d / -f 2 <<< ${{ github.repository }})" >> $GITHUB_OUTPUT
+      - name: Takes only the repository name and capitalizes it
+        id: repo
+        run: echo "repo=$(${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
         
       - name: Wait before updating slack message
         run: sleep 15
@@ -55,5 +57,5 @@ jobs:
             repo=${{ steps.repo.outputs.repo }}
             wf-url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
             check=:white_check_mark:
-          text: '[check] __<[wf-url] | [repo]>__ Den er i boks! [check]'
+          text: '[check] [repo] Den er i boks! [check] <[wf-url] | ${{ github.workflow }}>'
           debug: true
