@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+const github = require('@actions/github');
 const { WebClient } = require('@slack/web-api');
 
 const isDev = core.getInput('debug')
@@ -21,6 +22,9 @@ async function run() {
       core.setFailed('No token provided')
       return
     }
+
+    const { eventName, workflow, runId, repo: repository } = github.context
+    const { owner, repo } = repository
     
     const client = new WebClient(token)
 
@@ -28,13 +32,24 @@ async function run() {
       channel: channelId,
       ts: messageId,
       text: "Whello!", // Fallback text
-      blocks: [{
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": injectArgs(text, getArgs(argsStr))
+      blocks: [
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": injectArgs(text, getArgs(argsStr))
+          }
+        },
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": `${eventName} | <https://github.com/${owner}/${repo}/actions/runs/${runId} | ${workflow}>`
+            }
+          ]
         }
-      }]
+      ]
     }
 
     debug(messageId ? 'Updating...' : 'Posting...')
