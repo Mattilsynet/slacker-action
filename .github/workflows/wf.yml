@@ -17,7 +17,9 @@ jobs:
 
       - name: Takes only the repository name and capitalizes it
         id: repo
-        run: echo "repo=$(echo ${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
+        run: |
+          echo "repo=$(echo ${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
+          echo "sha=$(echo ${{ github.sha }} | cut -c 1-8)" >> $GITHUB_OUTPUT
 
       - id: slack
         env:
@@ -29,7 +31,7 @@ jobs:
             repo=${{ steps.repo.outputs.repo }}
             commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
             vest=:safety_vest:
-          text: '[vest] [repo] kjører testene... [vest] <[commit-url] | ${{ github.sha }}>'
+          text: '[vest] [repo] kjører testene... [vest] <[commit-url] | ${{ steps.repo.outputs.sha }}>'
           debug: true
 
   update:
@@ -41,7 +43,9 @@ jobs:
       
       - name: Takes only the repository name and capitalizes it
         id: repo
-        run: echo "repo=$(echo ${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
+        run: |
+          echo "repo=$(echo ${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
+          echo "sha=$(echo ${{ github.sha }} | cut -c 1-8)" >> $GITHUB_OUTPUT
         
       - name: Wait before updating slack message
         run: sleep 8
@@ -57,5 +61,5 @@ jobs:
             repo=${{ steps.repo.outputs.repo }}
             commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
             check=:white_check_mark:
-          text: '[check] [repo] Den er i boks! [check] <[commit-url] | ${{ github.sha }}>'
+          text: '[check] [repo] Den er i boks! [check] <[commit-url] | ${{ steps.repo.outputs.sha }}>'
           debug: true
