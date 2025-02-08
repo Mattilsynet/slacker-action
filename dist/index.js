@@ -44140,9 +44140,10 @@ async function run() {
       return
     }
 
-    const { eventName, workflow, runId, repo: repository } = github.context
+    const { eventName, workflow, runId, sha, repo: repository } = github.context
     const { owner, repo } = repository
     const repoUrl = `https://github.com/${owner}/${repo}`
+    const commitSection = sha ? `| <${repoUrl}/commit/${sha} | commit> ` : ''
     
     const client = new WebClient(token)
 
@@ -44163,7 +44164,7 @@ async function run() {
           "elements": [
             {
               "type": "mrkdwn",
-              "text": `<${repoUrl} | ${repo}> | ${eventName} | <${repoUrl}/actions/runs/${runId} | ${workflow}>`
+              "text": `<${repoUrl} | ${repo}> | ${eventName} ${commitSection}| <${repoUrl}/actions/runs/${runId} | ${workflow}>`
             }
           ]
         }
