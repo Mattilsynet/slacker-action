@@ -15,12 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Takes only the repository name and capitalizes it
-        id: repo
-        run: |
-          echo "repo=$(echo ${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
-          echo "sha=$(echo ${{ github.sha }} | cut -c 1-8)" >> $GITHUB_OUTPUT
-
       - id: slack
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -28,10 +22,9 @@ jobs:
         with:
           channel-id: C08C995BUAZ
           args: |
-            repo=${{ steps.repo.outputs.repo }}
             commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
             vest=:safety_vest:
-          text: '[vest] [repo] kjører testene... [vest] <[commit-url] | ${{ steps.repo.outputs.sha }}>'
+          text: '[vest] kjører testene... <[commit-url] | commit>'
           debug: true
 
   update:
@@ -40,12 +33,6 @@ jobs:
     needs: [post]
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Takes only the repository name and capitalizes it
-        id: repo
-        run: |
-          echo "repo=$(echo ${{ github.repository }} | cut -d / -f 2 | sed 's/^\(.\)/\U\1/')" >> $GITHUB_OUTPUT
-          echo "sha=$(echo ${{ github.sha }} | cut -c 1-8)" >> $GITHUB_OUTPUT
         
       - name: Wait before updating slack message
         run: sleep 8
@@ -58,8 +45,7 @@ jobs:
           channel-id: C08C995BUAZ
           message-id: ${{ needs.post.outputs.slack-message }}
           args: |
-            repo=${{ steps.repo.outputs.repo }}
             commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
             check=:white_check_mark:
-          text: '[check] [repo] Den er i boks! [check] <[commit-url] | ${{ steps.repo.outputs.sha }}>'
+          text: '[check] Den er i boks! <[commit-url] | commit>'
           debug: true
