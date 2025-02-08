@@ -27,9 +27,9 @@ jobs:
           channel-id: C08C995BUAZ
           args: |
             repo=${{ steps.repo.outputs.repo }}
-            wf-url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
             vest=:safety_vest:
-          text: '[vest] [repo] kjører testene... [vest] <[wf-url] | ${{ github.workflow }}>'
+          text: '[vest] [repo] kjører testene... [vest] <[commit-url] | ${{ github.sha }}>'
           debug: true
 
   update:
@@ -55,7 +55,7 @@ jobs:
           message-id: ${{ needs.post.outputs.slack-message }}
           args: |
             repo=${{ steps.repo.outputs.repo }}
-            wf-url=https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
             check=:white_check_mark:
-          text: '[check] [repo] Den er i boks! [check] <[wf-url] | ${{ github.workflow }}>'
+          text: '[check] [repo] Den er i boks! [check] <[commit-url] | ${{ github.sha }}>'
           debug: true
