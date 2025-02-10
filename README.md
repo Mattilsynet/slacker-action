@@ -47,6 +47,16 @@ _See example usage in `.github/workflows/wf.yml`_
        text: "I am so [grin], I approve [check]"
    ```
    `=> "I am so 😁, I approve ✅"`
+1. You can also inline everything:
+   ```yaml
+   uses: mattilsynet/slacker-action@master
+   with:
+       channel-id: <slack channel id>
+       text: ":white_check_mark: ${{ github.repository }} has been published :rocket:"
+   ```
+
+See how to use Slack `mrkdwn`:
+https://api.slack.com/reference/surfaces/formatting#basic-formatting
 
 ## Development
 
