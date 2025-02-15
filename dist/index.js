@@ -44143,9 +44143,15 @@ async function run() {
     const { eventName, workflow, runId, sha, repo: repository } = github.context
     const { owner, repo } = repository
     const repoUrl = `https://github.com/${owner}/${repo}`
-    const commitSection = sha ? `| <${repoUrl}/commit/${sha} | commit> ` : ''
-    
-    const client = new WebClient(token)
+
+    const footer = [
+      getLink(repoUrl, repo),
+      eventName,
+      sha ? getLink(`${repoUrl}/commit/${sha}`, 'commit') : '',
+      getLink(`${repoUrl}/actions/runs/${runId}`, workflow),
+      messageId ? getTimeString() : ''
+    ].filter(part => part !== '')
+     .join(' | ')
 
     const body = {
       channel: channelId,
@@ -44164,16 +44170,19 @@ async function run() {
           "elements": [
             {
               "type": "mrkdwn",
-              "text": `<${repoUrl} | ${repo}> | ${eventName} ${commitSection}| <${repoUrl}/actions/runs/${runId} | ${workflow}> | ${getTimeString()}`
+              "text": footer
             }
           ]
         }
       ]
     }
 
+    const client = new WebClient(token)
+
     debug(messageId ? 'Updating...' : 'Posting...')
     const { ok, ts } = await client.chat[method](body)
     debug('res:', { ok: ok, ts: ts })
+
     core.setOutput('message-id', ts)
   } catch (error) {
     console.error('error data:', JSON.stringify(error.data))
@@ -44195,6 +44204,10 @@ function injectArgs(str, args) {
   const text = args.reduce((txt, [name, val]) => txt.replaceAll(`[${name}]`, val), str)
   debug('text:', text)
   return text
+}
+
+function getLink(url, txt) {
+  return `<${url} | ${txt}>`
 }
 
 function getTimeString() {
