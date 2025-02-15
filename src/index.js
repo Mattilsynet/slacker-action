@@ -95,7 +95,7 @@ function getLink(url, txt) {
 
 function getTimeString() {
   const now = new Date()
-  const timestamp = now.getTime() / 1000
+  const timestamp = Math.floor(now.getTime() / 1000)
   const fallback = now.toUTCString()
   //      <!date^timestamp   ^token_string^optional_link | fallback_text>
   return `<!date^${timestamp}^{date_short_pretty} {time} | ${fallback}>`
