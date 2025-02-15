@@ -44164,7 +44164,7 @@ async function run() {
           "elements": [
             {
               "type": "mrkdwn",
-              "text": `<${repoUrl} | ${repo}> | ${eventName} ${commitSection}| <${repoUrl}/actions/runs/${runId} | ${workflow}>`
+              "text": `<${repoUrl} | ${repo}> | ${eventName} ${commitSection}| <${repoUrl}/actions/runs/${runId} | ${workflow}> | ${getTimeString()}`
             }
           ]
         }
@@ -44195,6 +44195,14 @@ function injectArgs(str, args) {
   const text = args.reduce((txt, [name, val]) => txt.replaceAll(`[${name}]`, val), str)
   debug('text:', text)
   return text
+}
+
+function getTimeString() {
+  const now = new Date()
+  const timestamp = now.getTime() / 1000
+  const fallback = now.toUTCString()
+  //      <!date^timestamp   ^token_string^optional_link | fallback_text>
+  return `<!date^${timestamp}^{date_short_pretty} {time} | ${fallback}>`
 }
 
 function debug(...logs) {
