@@ -23,6 +23,7 @@ jobs:
             commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
             vest=:safety_vest:
           text: '[vest] kjører testene... <[commit-url] | commit>'
+          short-text: 'Bygget er i gang'
           debug: true
 
   update:

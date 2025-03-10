@@ -8,6 +8,7 @@ async function run() {
   try {
     const channelId = core.getInput('channel-id')
     const text = core.getInput('text')
+    const shortText = core.getInput('short-text')
     const argsStr = core.getInput('args') ?? ''
     const messageId = core.getInput('message-id')
     const method = messageId ? 'update' : 'postMessage'
@@ -39,7 +40,7 @@ async function run() {
     const body = {
       channel: channelId,
       ts: messageId,
-      text: "Whello!", // Fallback text
+      text: shortText ?? "Whello!", // Notification text
       blocks: [
         {
           "type": "section",

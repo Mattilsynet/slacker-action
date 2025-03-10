@@ -7,6 +7,9 @@ inputs:
   text:
     description: 'E.g. build status'
     required: true
+  short-text:
+    description: 'The text that appears in the notification'
+    required: false
   args:
     type: 'string'
     description: |
