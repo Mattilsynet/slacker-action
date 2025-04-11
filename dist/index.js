@@ -44160,24 +44160,7 @@ async function run() {
       ts: messageId,
       thread_ts: replyToId,
       text: shortText ?? "Whello!", // Notification text
-      blocks: [
-        {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": injectArgs(text, getArgs(argsStr))
-          }
-        },
-        {
-          "type": "context",
-          "elements": [
-            {
-              "type": "mrkdwn",
-              "text": footer
-            }
-          ]
-        }
-      ]
+      blocks: getBlocks(text, argsStr, footer, replyToId),
     }
 
     const client = new WebClient(token)
@@ -44191,6 +44174,33 @@ async function run() {
     console.error('error data:', JSON.stringify(error.data))
     core.setFailed(error.message);
   }
+}
+
+function getBlocks(text, argsStr, footer, replyToId) {
+  const mrkdwnSection = {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": injectArgs(text, getArgs(argsStr))
+    }
+  }
+
+  if (replyToId) {
+    return [mrkdwnSection]
+  }
+
+  return [
+    mrkdwnSection,
+    {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": footer
+        }
+      ]
+    }
+  ]
 }
 
 function getArgs(argsStr) {
