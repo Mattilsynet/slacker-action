@@ -18,6 +18,9 @@ inputs:
   message-id:
     description: 'Id of the existing message to update'
     required: false
+  reply-to-id:
+    description: 'Id of the existing message to reply to'
+    required: false
   debug:
     type: 'boolean'
     required: false

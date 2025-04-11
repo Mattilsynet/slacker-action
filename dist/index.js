@@ -44128,6 +44128,7 @@ async function run() {
     const shortText = core.getInput('short-text')
     const argsStr = core.getInput('args') ?? ''
     const messageId = core.getInput('message-id')
+    const replyToId = core.getInput('reply-to-id')
     const method = messageId ? 'update' : 'postMessage'
 
     if (!channelId) {
@@ -44157,6 +44158,7 @@ async function run() {
     const body = {
       channel: channelId,
       ts: messageId,
+      thread_ts: replyToId,
       text: shortText ?? "Whello!", // Notification text
       blocks: [
         {

@@ -20,14 +20,14 @@ _See example usage in `.github/workflows/wf.yml`_
 
 1. Basic example:
    ```yaml
-   uses: Mattilsynet/slacker-action@master
+   uses: Mattilsynet/slacker-action@main
    with:
        channel-id: <slack channel id>
        text: "Your text here"
    ```
 1. With `args`:
    ```yaml
-   uses: Mattilsynet/slacker-action@master
+   uses: Mattilsynet/slacker-action@main
    with:
        channel-id: <slack channel id>
        args: |
@@ -38,7 +38,7 @@ _See example usage in `.github/workflows/wf.yml`_
    ```
 1. With slack emojies:
    ```yaml
-   uses: mattilsynet/slacker-action@master
+   uses: mattilsynet/slacker-action@main
    with:
        channel-id: <slack channel id>
        args: |
@@ -49,11 +49,31 @@ _See example usage in `.github/workflows/wf.yml`_
    `=> "I am so 😁, I approve ✅"`
 1. You can also inline everything:
    ```yaml
-   uses: mattilsynet/slacker-action@master
+   uses: mattilsynet/slacker-action@main
    with:
        channel-id: <slack channel id>
        text: ":white_check_mark: ${{ github.repository }} has been published :rocket:"
    ```
+
+### Updating a message
+
+```yaml
+    uses: Mattilsynet/slacker-action@main
+    with:
+        channel-id: <slack channel id>
+        message-id: <ts of message>
+        text: "Your text here"
+```
+
+### Reply to a message
+
+```yaml
+    uses: Mattilsynet/slacker-action@main
+    with:
+        channel-id: <slack channel id>
+        reply-to-id: <ts of message>
+        text: "Your text here"
+```
 
 See how to use Slack `mrkdwn`:
 https://api.slack.com/reference/surfaces/formatting#basic-formatting
