@@ -75,7 +75,7 @@ jobs:
         with:
           channel-id: C08C995BUAZ
           bot-name: "Robo Machine"
-          bot-icon: ":bot:"
-          text: ':bot: is saying "Hi!"'
+          bot-icon: ":robot_face:"
+          text: ':robot_face: is saying "Hi!"'
           short-text: 'Hi!'
           debug: true

@@ -83,7 +83,7 @@ _See example usages in `.github/workflows/wf.yml`_
         channel-id: <slack channel id>
         text: "Your text here"
         bot-name: "Bob Bobo"
-        bot-icon: ":bot:"
+        bot-icon: ":robot_face:"
 ```
 
 ## Tips & Tricks
