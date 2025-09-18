@@ -64,3 +64,18 @@ jobs:
           reply-to-id: ${{ needs.post.outputs.slack-message }}
           text: 'Wow, awesome job! :tada:'
           debug: true
+
+  changed-bot-info:
+    name: With bot name and emoji changed
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: Mattilsynet/slacker-action@main
+        with:
+          channel-id: C08C995BUAZ
+          bot-name: "Robo Machine"
+          bot-icon: ":bot:"
+          text: ':bot: is saying "Hi!"'
+          short-text: 'Hi!'
+          debug: true

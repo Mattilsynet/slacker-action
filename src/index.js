@@ -13,6 +13,9 @@ async function run() {
     const messageId = core.getInput('message-id')
     const replyToId = core.getInput('reply-to-id')
     const method = messageId ? 'update' : 'postMessage'
+    // Bot
+    const botName = core.getInput('bot-name')
+    const botIcon = core.getInput('bot-icon')
 
     if (!channelId) {
       core.setFailed('No channel id provided')
@@ -44,6 +47,14 @@ async function run() {
       thread_ts: replyToId,
       text: shortText ?? "Whello!", // Notification text
       blocks: getBlocks(text, argsStr, footer, replyToId),
+    }
+
+    // Bot
+    if (botName) {
+      body.username = botName
+    }
+    if (botIcon) {
+      body.icon_emoji = botIcon
     }
 
     const client = new WebClient(token)

@@ -16,7 +16,7 @@ Post and update slack messages
 
 ## Usage
 
-_See example usage in `.github/workflows/wf.yml`_
+_See example usages in `.github/workflows/wf.yml`_
 
 1. Basic example:
    ```yaml
@@ -74,6 +74,19 @@ _See example usage in `.github/workflows/wf.yml`_
         reply-to-id: <ts of message>
         text: "Your text here"
 ```
+
+### Changing the name and icon of the bot
+
+```yaml
+    uses: Mattilsynet/slacker-action@main
+    with:
+        channel-id: <slack channel id>
+        text: "Your text here"
+        bot-name: "Bob Bobo"
+        bot-icon: ":bot:"
+```
+
+## Tips & Tricks
 
 See how to use Slack `mrkdwn`:
 https://api.slack.com/reference/surfaces/formatting#basic-formatting
