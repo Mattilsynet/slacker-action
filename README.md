@@ -77,6 +77,8 @@ _See example usages in `.github/workflows/wf.yml`_
 
 ### Changing the name and icon of the bot
 
+_This needs extra permissions_
+
 ```yaml
     uses: Mattilsynet/slacker-action@main
     with:
