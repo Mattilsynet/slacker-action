@@ -25,6 +25,14 @@ inputs:
     type: 'boolean'
     required: false
     default: false
+  bot-name:
+    type: 'string'
+    description: 'The bot name to be displayed as sender'
+    required: false
+  bot-icon:
+    type: 'string'
+    description: 'The bot icon to be displayed'
+    required: false
 outputs:
   message-id:
     description: 'The id of the message sent'
