@@ -7,66 +7,8 @@ on:
       - 'main'
 
 jobs:
-  post:
-    name: notify slack
-    runs-on: ubuntu-latest
-    outputs:
-      slack-message: ${{ steps.slack.outputs.message-id }}
-    steps:
-      - id: slack
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        uses: Mattilsynet/slacker-action@main
-        with:
-          channel-id: C08C995BUAZ
-          args: |
-            commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
-            vest=:safety_vest:
-          text: '[vest] kjører testene... <[commit-url] | commit>'
-          short-text: 'Bygget er i gang'
-          debug: true
-
-  update:
-    name: update slack message
-    runs-on: ubuntu-latest
-    needs: [post]
-    steps:
-      - name: Wait before updating slack message
-        run: sleep 4
-        
-      - id: slack_update
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        uses: Mattilsynet/slacker-action@main
-        with:
-          channel-id: C08C995BUAZ
-          message-id: ${{ needs.post.outputs.slack-message }}
-          args: |
-            commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
-            check=:white_check_mark:
-          text: '[check] Den er i boks! <[commit-url] | commit>'
-          debug: true
-
-  reply:
-    name: reply to a slack message
-    runs-on: ubuntu-latest
-    needs: [post]
-    steps:
-      - name: Wait before updating slack message
-        run: sleep 4
-
-      - id: slack_reply
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        uses: Mattilsynet/slacker-action@main
-        with:
-          channel-id: C08C995BUAZ
-          reply-to-id: ${{ needs.post.outputs.slack-message }}
-          text: 'Wow, awesome job! :tada:'
-          debug: true
-
-  changed-bot-info:
-    name: With bot name and emoji changed
+  std:
+    name: Standard message
     runs-on: ubuntu-latest
     steps:
       - env:
@@ -74,8 +16,91 @@ jobs:
         uses: Mattilsynet/slacker-action@main
         with:
           channel-id: C08C995BUAZ
-          bot-name: "Robo Machine"
-          bot-icon: ":robot_face:"
-          text: ':robot_face: is saying "Hi!"'
-          short-text: 'Hi!'
+          text: 'A simple message without any fuss'
+          short-text: 'A simple message...'
+          debug: true
+
+  with-args:
+    name: Using args
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: Mattilsynet/slacker-action@main
+        with:
+          channel-id: C08C995BUAZ
+          args: |
+            commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
+            bulb=:bulb:
+          text: '[bulb] A more refined message with a link to the latest <[commit-url] | commit> using `args`.'
+          short-text: 'A more refined message...'
+          debug: true
+
+  update:
+    name: Updating a message
+    runs-on: ubuntu-latest
+    steps:
+      - id: slack
+        name: Post a message to slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: Mattilsynet/slacker-action@main
+        with:
+          channel-id: C08C995BUAZ
+          text: 'Has this message been updated? :x:'
+          short-text: 'Message needs updating'
+          debug: true
+      - name: Wait a bit
+        run: sleep 4
+      - name: Update the message
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: Mattilsynet/slacker-action@main
+        with:
+          channel-id: C08C995BUAZ
+          message-id: ${{ steps.slack.outputs.message-id }}
+          text: 'Has this message been updated? :white_check_mark:'
+          short-text: 'Message is updated'
+          debug: true
+
+  reply:
+    name: Replying to a message
+    runs-on: ubuntu-latest
+    steps:
+      - id: slack
+        name: Post a message to slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: Mattilsynet/slacker-action@main
+        with:
+          channel-id: C08C995BUAZ
+          text: 'Message that should have a reply'
+          short-text: 'Message with reply'
+          debug: true
+      - name: Wait a bit
+        run: sleep 4
+      - name: Reply to the message
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: Mattilsynet/slacker-action@main
+        with:
+          channel-id: C08C995BUAZ
+          reply-to-id: ${{ steps.slack.outputs.message-id }}
+          text: 'This is a most resplendent comment'
+          short-text: 'This is a most...'
+          debug: true
+
+  dupe:
+    name: Changing the name and icon of the author
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: Mattilsynet/slacker-action@main
+        with:
+          channel-id: C08C995BUAZ
+          bot-name: "Gandalf"
+          bot-icon: ":gandalf-2:"
+          text: '> They have taken the bridge and the second hall. We have barred the gates but cannot hold them for long. The ground shakes, drums... drums in the deep. We cannot get out. A shadow lurks in the dark. We can not get out... they are coming.'
+          short-text: 'They have taken the bridge...'
           debug: true
