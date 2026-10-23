@@ -26,6 +26,7 @@ jobs:
   with-args:
     name: Using args
     runs-on: ubuntu-latest
+    needs: [std]
     steps:
       - env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -42,6 +43,7 @@ jobs:
   update:
     name: Updating a message
     runs-on: ubuntu-latest
+    needs: [with-args]
     steps:
       - id: slack
         name: Post a message to slack
@@ -69,6 +71,7 @@ jobs:
   reply:
     name: Replying to a message
     runs-on: ubuntu-latest
+    needs: [update]
     steps:
       - id: slack
         name: Post a message to slack
@@ -96,6 +99,7 @@ jobs:
   dupe:
     name: Changing the name and icon of the author
     runs-on: ubuntu-latest
+    needs: [reply]
     steps:
       - env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
