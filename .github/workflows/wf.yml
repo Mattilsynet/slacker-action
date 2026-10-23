@@ -6,6 +6,9 @@ on:
     branches:
       - 'main'
 
+env:
+  SLACK_CHANNEL_ID: C08C995BUAZ
+
 jobs:
   std:
     name: Standard message
@@ -15,7 +18,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: Mattilsynet/slacker-action@main
         with:
-          channel-id: C08C995BUAZ
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
           text: 'A simple message without any fuss'
           short-text: 'A simple message...'
           debug: true
@@ -28,7 +31,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: Mattilsynet/slacker-action@main
         with:
-          channel-id: C08C995BUAZ
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
           args: |
             commit-url=https://github.com/${{ github.repository }}/commit/${{ github.sha }}
             bulb=:bulb:
@@ -46,7 +49,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: Mattilsynet/slacker-action@main
         with:
-          channel-id: C08C995BUAZ
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
           text: 'Has this message been updated? :x:'
           short-text: 'Message needs updating'
           debug: true
@@ -57,7 +60,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: Mattilsynet/slacker-action@main
         with:
-          channel-id: C08C995BUAZ
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
           message-id: ${{ steps.slack.outputs.message-id }}
           text: 'Has this message been updated? :white_check_mark:'
           short-text: 'Message is updated'
@@ -73,7 +76,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: Mattilsynet/slacker-action@main
         with:
-          channel-id: C08C995BUAZ
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
           text: 'Message that should have a reply'
           short-text: 'Message with reply'
           debug: true
@@ -84,7 +87,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: Mattilsynet/slacker-action@main
         with:
-          channel-id: C08C995BUAZ
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
           reply-to-id: ${{ steps.slack.outputs.message-id }}
           text: 'This is a most resplendent comment'
           short-text: 'This is a most...'
@@ -98,7 +101,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: Mattilsynet/slacker-action@main
         with:
-          channel-id: C08C995BUAZ
+          channel-id: ${{ env.SLACK_CHANNEL_ID }}
           bot-name: "Gandalf"
           bot-icon: ":gandalf-2:"
           text: '> They have taken the bridge and the second hall. We have barred the gates but cannot hold them for long. The ground shakes, drums... drums in the deep. We cannot get out. A shadow lurks in the dark. We can not get out... they are coming.'
