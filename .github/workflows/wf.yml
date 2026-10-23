@@ -108,6 +108,6 @@ jobs:
           channel-id: ${{ env.SLACK_CHANNEL_ID }}
           bot-name: "Gandalf"
           bot-icon: ":gandalf-2:"
-          text: "> They have taken the bridge and the second hall. We have barred\n the gates but cannot hold them for long. The ground shakes,\n drums... drums in the deep. We cannot get out. A shadow lurks\n in the dark. We can not get out... they are coming."
+          text: "> They have taken the bridge and the second hall. We have barred\n> the gates but cannot hold them for long. The ground shakes,\n> drums... drums in the deep. We cannot get out. A shadow lurks\n> in the dark. We can not get out... they are coming."
           short-text: 'They have taken the bridge...'
           debug: true
