@@ -1,34 +1,34 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-const { WebClient } = require('@slack/web-api');
+import { getInput, setFailed, setOutput } from '@actions/core';
+import { context as githubContext } from '@actions/github';
+import { WebClient } from '@slack/web-api';
 
-const isDev = core.getInput('debug')
+const isDev = getInput('debug')
 
 async function run() {
   try {
-    const channelId = core.getInput('channel-id')
-    const text = core.getInput('text')
-    const shortText = core.getInput('short-text')
-    const argsStr = core.getInput('args') ?? ''
-    const messageId = core.getInput('message-id')
-    const replyToId = core.getInput('reply-to-id')
+    const channelId = getInput('channel-id')
+    const text = getInput('text')
+    const shortText = getInput('short-text')
+    const argsStr = getInput('args') ?? ''
+    const messageId = getInput('message-id')
+    const replyToId = getInput('reply-to-id')
     const method = messageId ? 'update' : 'postMessage'
     // Bot
-    const botName = core.getInput('bot-name')
-    const botIcon = core.getInput('bot-icon')
+    const botName = getInput('bot-name')
+    const botIcon = getInput('bot-icon')
 
     if (!channelId) {
-      core.setFailed('No channel id provided')
+      setFailed('No channel id provided')
       return
     }
 
     const token = process.env.SLACK_BOT_TOKEN
     if (!token) {
-      core.setFailed('No token provided')
+      setFailed('No token provided')
       return
     }
 
-    const { eventName, workflow, runId, sha, repo: repository } = github.context
+    const { eventName, workflow, runId, sha, repo: repository } = githubContext
     const { owner, repo } = repository
     const repoUrl = `https://github.com/${owner}/${repo}`
 
@@ -59,14 +59,14 @@ async function run() {
 
     const client = new WebClient(token)
 
-    debug(messageId ? 'Updating...' : 'Posting...')
+    debugLog(messageId ? 'Updating...' : 'Posting...')
     const { ok, ts } = await client.chat[method](body)
-    debug('res:', { ok: ok, ts: ts })
+    debugLog('res:', { ok: ok, ts: ts })
 
-    core.setOutput('message-id', ts)
+    setOutput('message-id', ts)
   } catch (error) {
     console.error('error data:', JSON.stringify(error.data))
-    core.setFailed(error.message);
+    setFailed(error.message);
   }
 }
 
@@ -103,13 +103,13 @@ function getArgs(argsStr) {
   }
 
   const args = argsStr.split("\n").map(kv => kv.split("="))
-  debug('args:', JSON.stringify(args))
+  debugLog('args:', JSON.stringify(args))
   return args
 }
 
 function injectArgs(str, args) {
   const text = args.reduce((txt, [name, val]) => txt.replaceAll(`[${name}]`, val), str)
-  debug('text:', text)
+  debugLog('text:', text)
   return text
 }
 
@@ -125,7 +125,7 @@ function getTimeString() {
   return `<!date^${timestamp}^updated {time} | ${fallback}>`
 }
 
-function debug(...logs) {
+function debugLog(...logs) {
   if (isDev) {
     console.log(...logs)
   }

@@ -2,6 +2,7 @@
   "name": "slacker-action",
   "version": "0.1.0",
   "description": "Notify and update slack notifications",
+  "type": "module",
   "main": "src/index.js",
   "scripts": {
     "build": "ncc build -o dist"
@@ -12,8 +13,8 @@
   },
   "homepage": "https://github.com/Mattilsynet/slacker-action#readme",
   "dependencies": {
-    "@actions/core": "^2.0.3",
-    "@actions/github": "^8.0.0",
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1",
     "@slack/web-api": "^8.2.0"
   },
   "devDependencies": {
