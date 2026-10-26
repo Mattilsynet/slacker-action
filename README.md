@@ -77,7 +77,7 @@ _See example usages in `.github/workflows/wf.yml`_
 
 ### Changing the name and icon of the bot
 
-_This needs extra permissions_
+_This needs another scope (`chat:write.customize`)._
 
 ```yaml
     uses: Mattilsynet/slacker-action@main
